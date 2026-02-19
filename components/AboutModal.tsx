@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Cpu, Database, CloudCog, User, Bot, Scale, ChevronDown, ChevronUp, Github } from 'lucide-react';
+import { X, Cpu, Database, CloudCog, Bot, Scale, ChevronDown, ChevronUp, Github } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
