@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Cpu, Database, CloudCog, Bot, Scale, ChevronDown, ChevronUp, Github } from 'lucide-react';
+import { X, Cpu, Database, CloudCog, Bot, Scale, ChevronDown, ChevronUp, User } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
@@ -37,13 +37,13 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
           
           {/* Creators */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold text-stone-500 dark:text-slate-500 uppercase tracking-widest">Erstellt von</h3>
+            <h3 className="text-xs font-bold text-stone-500 dark:text-slate-500 uppercase tracking-widest">Projekt</h3>
             <div className="flex items-center gap-4 bg-stone-100 dark:bg-slate-800 p-3 rounded-lg border border-stone-300 dark:border-slate-700">
                 <div className="flex items-center gap-2">
                     <div className="bg-stone-300 dark:bg-indigo-900/30 p-1.5 rounded-full text-stone-600 dark:text-indigo-400">
-                        <Github size={16} />
+                        <User size={16} />
                     </div>
-                    <span className="text-sm font-semibold text-stone-700 dark:text-slate-200">Open Source Community</span>
+                    <span className="text-sm font-semibold text-stone-700 dark:text-slate-200">Personal Tool</span>
                 </div>
                 <span className="text-stone-400 dark:text-slate-600 text-sm">+</span>
                 <div className="flex items-center gap-2">
@@ -67,7 +67,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <div>
                         <strong className="text-stone-800 dark:text-white block mb-0.5">Lokale Tarif-Datenbank</strong>
                         <p className="leading-relaxed">
-                            Die App speichert eine Basis-Datenbank der gängigen Tarife (DHL, Hermes, DPD, GLS) direkt im Browser (Local Storage).
+                            Die App speichert eine Basis-Datenbank der gängigen Tarife direkt im Browser (Local Storage).
                         </p>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <div>
                         <strong className="text-stone-800 dark:text-white block mb-0.5">Algorithmus</strong>
                         <p className="leading-relaxed">
-                            Bei Eingabe der Maße prüft ein lokaler Algorithmus Dimensionen, Gurtmaß (L+2xB+2xH) und Gewicht gegen die Limits der Anbieter und filtert unpassende Tarife sofort aus.
+                            Bei Eingabe der Maße prüft ein lokaler Algorithmus Dimensionen und Gewicht gegen die Limits der Anbieter.
                         </p>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <div>
                         <strong className="text-stone-700 dark:text-indigo-400 block mb-0.5">AI Live-Update (Gemini)</strong>
                         <p className="leading-relaxed">
-                            Der "Aktualisieren"-Button nutzt das <strong>Google Gemini 2.0 Flash</strong> Modell mit Google Search Grounding. Die KI recherchiert live im Internet die tagesaktuellen Preise der Anbieter, vergleicht diese mit der lokalen Datenbank und aktualisiert bei Bedarf die Werte in Echtzeit.
+                            Der "Aktualisieren"-Button nutzt das <strong>Google Gemini 2.0 Flash</strong> Modell, um Preise live im Internet zu validieren (Google Search Grounding).
                         </p>
                     </div>
                 </div>
@@ -119,7 +119,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     </button>
                 </div>
                 
-                <p>Copyright (c) {currentYear} PortoIQ Contributors</p>
+                <p>Copyright (c) {currentYear} Personal Project</p>
                 
                 {!showLicense ? (
                     <p className="mt-1 opacity-75">
@@ -153,7 +153,7 @@ SOFTWARE.
 
         {/* Footer */}
         <div className="bg-stone-200 dark:bg-slate-850 px-5 py-3 border-t border-stone-300 dark:border-slate-800 text-center flex-shrink-0">
-            <p className="text-[10px] text-stone-500 dark:text-slate-500">PortoIQ Version 1.0.0 • Alle Rechte vorbehalten</p>
+            <p className="text-[10px] text-stone-500 dark:text-slate-500">PortoIQ Version 1.0.0 • Private Use</p>
         </div>
       </div>
     </div>
