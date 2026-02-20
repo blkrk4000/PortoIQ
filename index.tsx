@@ -17,7 +17,8 @@ root.render(
 // PWA Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    // WICHTIG: './sw.js' statt '/sw.js', damit es auch auf GitHub Pages (/RepoName/) funktioniert
+    navigator.serviceWorker.register('./sw.js')
       .then((registration) => {
         console.log('PortoIQ Service Worker registered: ', registration.scope);
       })
