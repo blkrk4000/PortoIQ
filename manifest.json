@@ -1,8 +1,8 @@
 {
   "name": "PortoIQ Versandvergleich",
   "short_name": "PortoIQ",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/PortoIQ/",
+  "scope": "/PortoIQ/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#4f46e5",
@@ -10,13 +10,13 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "favicon.svg?v=2",
+      "src": "favicon.svg?v=3",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "favicon.svg?v=2",
+      "src": "favicon.svg?v=3",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
