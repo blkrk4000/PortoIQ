@@ -153,7 +153,7 @@ SOFTWARE.
 
         {/* Footer */}
         <div className="bg-stone-200 dark:bg-slate-850 px-5 py-3 border-t border-stone-300 dark:border-slate-800 text-center flex-shrink-0">
-            <p className="text-[10px] text-stone-500 dark:text-slate-500">PortoIQ Version 0.8.0 • Alle Rechte vorbehalten</p>
+            <p className="text-[10px] text-stone-500 dark:text-slate-500">PortoIQ Version 1.0.0 • Alle Rechte vorbehalten</p>
         </div>
       </div>
     </div>

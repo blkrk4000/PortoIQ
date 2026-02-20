@@ -266,7 +266,7 @@ const App: React.FC = () => {
                 <h1 className="font-black text-xl text-stone-900 dark:text-white tracking-tight">
                 Porto<span className="text-indigo-600 dark:text-indigo-400">IQ</span>
                 </h1>
-                <span className="text-[10px] font-bold text-stone-500 dark:text-slate-500 bg-stone-300 dark:bg-slate-800 px-1.5 py-0.5 rounded-md hidden sm:inline-block">v0.9.1</span>
+                <span className="text-[10px] font-bold text-stone-500 dark:text-slate-500 bg-stone-300 dark:bg-slate-800 px-1.5 py-0.5 rounded-md hidden sm:inline-block">v1.0.0</span>
             </div>
           </div>
           
