@@ -1,7 +1,8 @@
 import { CarrierConfig, Tariff } from './types';
 
-// Stand der Daten: 21.02.2026 (Manuelle Korrektur nach Nutzer-Feedback)
-export const DEFAULT_LAST_UPDATED = '21.02.2026';
+// Stand der Daten: 02.03.2026 (Hermes Preisanpassung)
+export const DEFAULT_LAST_UPDATED = '02.03.2026';
+export const DATA_VERSION = 2; // Increment this to force-reset user data to new defaults
 
 // Carrier Branding
 export const CARRIERS: Record<string, CarrierConfig> = {
@@ -48,7 +49,7 @@ export const CARRIERS: Record<string, CarrierConfig> = {
 };
 
 /**
- * TARIFF DATABASE (Stand Feb 2026)
+ * TARIFF DATABASE (Stand März 2026)
  * Base values for domestic DE shipping (Online Preise).
  */
 export const TARIFFS: Tariff[] = [
@@ -115,7 +116,7 @@ export const TARIFFS: Tariff[] = [
     features: ['Waren & Bücher', 'Längere Laufzeit'],
   },
 
-  // --- DHL (Online Preise Feb 2026) ---
+  // --- DHL (Online Preise März 2026) ---
   {
     id: 'dhl-paeckchen-s',
     carrier: 'DHL',
@@ -187,12 +188,12 @@ export const TARIFFS: Tariff[] = [
     features: ['Haftung bis 500 €', 'Sendungsverfolgung'],
   },
 
-  // --- HERMES (Online / Haustür Preise Feb 2026) ---
+  // --- HERMES (Online / Haustür Preise März 2026) ---
   {
     id: 'hermes-paeckchen',
     carrier: 'HERMES',
     name: 'Hermes Päckchen',
-    price: 4.89,
+    price: 5.19,
     currency: '€',
     maxWeight: 25,
     maxCombined: 37, // L + S
@@ -202,7 +203,7 @@ export const TARIFFS: Tariff[] = [
     id: 'hermes-s',
     carrier: 'HERMES',
     name: 'S-Paket',
-    price: 5.49,
+    price: 5.79,
     currency: '€',
     maxWeight: 25,
     maxCombined: 50,
@@ -249,7 +250,7 @@ export const TARIFFS: Tariff[] = [
     features: ['Haftung bis 500 €', 'Sendungsverfolgung', 'Inkl. Abholung'],
   },
 
-  // --- DPD (Online Preise Feb 2026, max 20kg) ---
+  // --- DPD (Online Preise März 2026, max 20kg) ---
   {
     id: 'dpd-xs',
     carrier: 'DPD',
@@ -302,7 +303,7 @@ export const TARIFFS: Tariff[] = [
     features: ['Haftung bis 520 €', 'Sendungsverfolgung'],
   },
 
-  // --- GLS (Online Preise Feb 2026) ---
+  // --- GLS (Online Preise März 2026) ---
   {
     id: 'gls-xs',
     carrier: 'GLS',

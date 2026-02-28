@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Package, Truck, Info, Table2, CheckCircle2, X, Settings, Sun, Moon, PencilLine } from 'lucide-react';
 import { PackageSpecs, CalculationResult, Tariff, ChangeLogEntry, CarrierId } from './types';
-import { TARIFFS as DEFAULT_TARIFFS, DEFAULT_LAST_UPDATED } from './constants';
+import { TARIFFS as DEFAULT_TARIFFS, DEFAULT_LAST_UPDATED, DATA_VERSION } from './constants';
 import { calculateBestRates } from './utils/calculator';
 import { PackageForm } from './components/PackageForm';
 import { ResultCard } from './components/ResultCard';
@@ -73,24 +73,54 @@ const App: React.FC = () => {
     const savedTariffs = localStorage.getItem('portoiq_tariffs');
     const savedDate = localStorage.getItem('portoiq_last_updated');
     const savedLog = localStorage.getItem('portoiq_change_log');
-    
-    if (savedTariffs) {
-      try {
-        setTariffs(JSON.parse(savedTariffs));
-      } catch (e) {
-        console.error("Failed to load saved tariffs", e);
-      }
-    }
-    
-    if (savedLog) {
-      try {
-        setChangeLog(JSON.parse(savedLog));
-      } catch (e) {
-        console.error("Failed to load change log", e);
-      }
+    const savedVersion = localStorage.getItem('portoiq_data_version');
+
+    // VERSION CHECK LOGIC
+    let currentVersion = parseInt(savedVersion || '0', 10);
+
+    // Migration: If user has data but no version, assume they are on v1 (current baseline)
+    // This prevents wiping existing data until we actually bump to v2
+    if (!savedVersion && savedTariffs) {
+        currentVersion = 1;
+        localStorage.setItem('portoiq_data_version', '1');
     }
 
-    setLastUpdated(savedDate || DEFAULT_LAST_UPDATED);
+    // If code version is newer than stored version, force reset to defaults
+    if (currentVersion < DATA_VERSION) {
+        console.log(`App updated: Migrating from v${currentVersion} to v${DATA_VERSION}`);
+        
+        setTariffs(DEFAULT_TARIFFS);
+        setLastUpdated(DEFAULT_LAST_UPDATED);
+        
+        // Persist new defaults immediately
+        localStorage.setItem('portoiq_tariffs', JSON.stringify(DEFAULT_TARIFFS));
+        localStorage.setItem('portoiq_last_updated', DEFAULT_LAST_UPDATED);
+        localStorage.setItem('portoiq_data_version', String(DATA_VERSION));
+
+        // Notify user if it wasn't a fresh install
+        if (currentVersion > 0) {
+            setNotification({ message: 'Preise wurden auf den neuesten Stand aktualisiert.', type: 'success' });
+        }
+    } else {
+        // Normal Load
+        if (savedTariffs) {
+            try {
+                setTariffs(JSON.parse(savedTariffs));
+            } catch (e) {
+                console.error("Failed to load saved tariffs", e);
+            }
+        }
+        
+        if (savedLog) {
+            try {
+                setChangeLog(JSON.parse(savedLog));
+            } catch (e) {
+                console.error("Failed to load change log", e);
+            }
+        }
+
+        setLastUpdated(savedDate || DEFAULT_LAST_UPDATED);
+    }
   }, []);
 
   // Save changes to tariffs whenever they change
