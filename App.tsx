@@ -292,52 +292,59 @@ const App: React.FC = () => {
             <div className="bg-indigo-600 dark:bg-indigo-600 text-white p-2 rounded-lg shadow-sm shadow-indigo-200 dark:shadow-none">
               <Truck size={20} className="transform -scale-x-100" />
             </div>
-            <div className="flex items-baseline gap-2">
-                <h1 className="font-black text-xl text-stone-900 dark:text-white tracking-tight">
+            <div className="flex items-center gap-3">
+                <h1 className="font-black text-2xl text-stone-900 dark:text-white tracking-tight">
                 Porto<span className="text-indigo-600 dark:text-indigo-400">IQ</span>
                 </h1>
-                <span className="text-[10px] font-bold text-stone-500 dark:text-slate-500 bg-stone-300 dark:bg-slate-800 px-1.5 py-0.5 rounded-md hidden sm:inline-block">v1.0.0</span>
+                <span className="text-[10px] font-bold text-stone-500 dark:text-slate-500 bg-stone-300 dark:bg-slate-800 px-2 py-1 rounded-md hidden sm:inline-block">v1.0.0</span>
             </div>
           </div>
           
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
              
-             {/* Theme Toggle */}
-             <button
-                onClick={toggleTheme}
-                className="flex items-center justify-center w-9 h-9 text-stone-500 hover:text-stone-800 dark:text-slate-400 dark:hover:text-yellow-300 hover:bg-stone-300 dark:hover:bg-slate-800 rounded-full transition-colors"
-                title={isDarkMode ? "Hellmodus aktivieren" : "Dunkelmodus aktivieren"}
-             >
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-             </button>
-
+             {/* Primary Action */}
              <button
                onClick={() => setShowTariffOverview(true)}
-               className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-stone-800 dark:text-slate-200 bg-stone-100 hover:bg-white dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-300 dark:border-slate-700 rounded-lg transition-all"
+               className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-stone-800 dark:text-slate-200 bg-stone-100 hover:bg-white dark:bg-slate-900 dark:hover:bg-slate-800 border border-stone-300 dark:border-slate-700 rounded-lg transition-all mr-1"
                title="Preistabelle & Updates"
              >
-               <Table2 size={16} className="text-stone-600 dark:text-slate-400" />
-               <span className="hidden lg:inline">Tarife & Bearbeiten</span>
+               <Table2 size={18} className="text-stone-600 dark:text-slate-400" />
+               <span className="hidden lg:inline">Tarife</span>
              </button>
 
-             {/* Settings Button - FIXED COLOR */}
-             <button
-               onClick={() => setShowSettings(true)}
-               className="flex items-center justify-center w-9 h-9 text-stone-500 hover:text-stone-900 dark:text-slate-400 dark:hover:text-indigo-400 hover:bg-stone-300 dark:hover:bg-slate-800 rounded-full transition-colors"
-               title="Einstellungen"
-             >
-               <Settings size={20} />
-             </button>
+             {/* Divider */}
+             <div className="h-6 w-px bg-stone-300 dark:bg-slate-700 mx-1 hidden sm:block"></div>
 
-             {/* Info Button - FIXED COLOR */}
-             <button
-               onClick={() => setShowAbout(true)}
-               className="flex items-center justify-center w-9 h-9 text-stone-500 hover:text-stone-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-stone-300 dark:hover:bg-slate-800 rounded-full transition-colors"
-               title="Über PortoIQ"
-             >
-               <Info size={20} />
-             </button>
+             {/* Secondary Actions Group */}
+             <div className="flex items-center gap-1">
+                {/* Theme Toggle */}
+                <button
+                    onClick={toggleTheme}
+                    className="flex items-center justify-center w-9 h-9 text-stone-500 hover:text-stone-800 dark:text-slate-400 dark:hover:text-yellow-300 hover:bg-stone-300 dark:hover:bg-slate-800 rounded-full transition-colors"
+                    title={isDarkMode ? "Hellmodus aktivieren" : "Dunkelmodus aktivieren"}
+                >
+                    {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+
+                {/* Settings Button */}
+                <button
+                onClick={() => setShowSettings(true)}
+                className="flex items-center justify-center w-9 h-9 text-stone-500 hover:text-stone-900 dark:text-slate-400 dark:hover:text-indigo-400 hover:bg-stone-300 dark:hover:bg-slate-800 rounded-full transition-colors"
+                title="Einstellungen"
+                >
+                <Settings size={20} />
+                </button>
+
+                {/* Info Button */}
+                <button
+                onClick={() => setShowAbout(true)}
+                className="flex items-center justify-center w-9 h-9 text-stone-500 hover:text-stone-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-stone-300 dark:hover:bg-slate-800 rounded-full transition-colors"
+                title="Über PortoIQ"
+                >
+                <Info size={20} />
+                </button>
+             </div>
           </div>
         </div>
       </header>
@@ -400,6 +407,13 @@ const App: React.FC = () => {
           )}
         </div>
       </main>
+
+      {/* Footer Info */}
+      <footer className="max-w-4xl mx-auto px-6 pb-6 text-center">
+        <p className="text-xs font-medium text-stone-400 dark:text-slate-600">
+            Preisstand: {lastUpdated}
+        </p>
+      </footer>
       
       {/* Main Toast Notification */}
       {notification && (
