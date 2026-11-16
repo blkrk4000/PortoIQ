@@ -154,7 +154,6 @@ export const TARIFFS: Tariff[] = [
     currency: '€',
     maxWeight: 5,
     maxDimensions: { length: 120, width: 60, height: 60 },
-    maxGirth: 300, // laut DHL: max. Gurtmaß (L + 2B + 2H) 300 cm
     features: ['Haftung bis 500 €', 'Sendungsverfolgung'],
   },
   {
@@ -165,7 +164,6 @@ export const TARIFFS: Tariff[] = [
     currency: '€',
     maxWeight: 10,
     maxDimensions: { length: 120, width: 60, height: 60 },
-    maxGirth: 300, // laut DHL: max. Gurtmaß (L + 2B + 2H) 300 cm
     features: ['Haftung bis 500 €', 'Sendungsverfolgung'],
   },
   {
@@ -176,7 +174,6 @@ export const TARIFFS: Tariff[] = [
     currency: '€',
     maxWeight: 20,
     maxDimensions: { length: 120, width: 60, height: 60 },
-    maxGirth: 300, // laut DHL: max. Gurtmaß (L + 2B + 2H) 300 cm
     features: ['Haftung bis 500 €', 'Sendungsverfolgung'],
   },
   {
