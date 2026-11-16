@@ -7,8 +7,8 @@ PortoIQ ist ein einfacher Versandrechner für Pakete innerhalb Deutschlands (DHL
 ## Features
 
 *   **Tarifrechner:** Vergleich basierend auf Maßen & Gewicht.
-*   **Local First:** Daten und API-Keys werden nur im Browser gespeichert.
-*   **KI-Update:** Optionale Preisaktualisierung via Google Gemini API (BYOK).
+*   **Local First:** Daten werden nur im Browser gespeichert.
+*   **Preise:** Tarife stehen in `constants.ts` und werden per Push aktualisiert.
 
 ## Status
 

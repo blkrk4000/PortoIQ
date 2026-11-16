@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Package, Truck, Info, Table2, CheckCircle2, X, Settings, Sun, Moon, PencilLine } from 'lucide-react';
-import { PackageSpecs, CalculationResult, Tariff, ChangeLogEntry, CarrierId } from './types';
+import { PackageSpecs, CalculationResult, Tariff, CarrierId } from './types';
 import { TARIFFS as DEFAULT_TARIFFS, DEFAULT_LAST_UPDATED, DATA_VERSION } from './constants';
 import { calculateBestRates } from './utils/calculator';
 import { PackageForm } from './components/PackageForm';
@@ -8,8 +8,6 @@ import { ResultCard } from './components/ResultCard';
 import { TariffOverview } from './components/TariffOverview';
 import { AboutModal } from './components/AboutModal';
 import { SettingsModal } from './components/SettingsModal';
-import { UpdateStatusModal } from './components/UpdateStatusModal';
-import { fetchLatestTariffPrices } from './services/gemini';
 
 const App: React.FC = () => {
   const [specs, setSpecs] = useState<PackageSpecs>({
@@ -33,7 +31,6 @@ const App: React.FC = () => {
   const [tariffs, setTariffs] = useState<Tariff[]>(DEFAULT_TARIFFS);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [results, setResults] = useState<CalculationResult[]>([]);
-  const [changeLog, setChangeLog] = useState<ChangeLogEntry[]>([]);
   
   // Edit Mode Snapshot State (For "Cancel" functionality)
   const [tariffSnapshot, setTariffSnapshot] = useState<Tariff[] | null>(null);
@@ -44,14 +41,6 @@ const App: React.FC = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [notification, setNotification] = useState<{message: string, details?: string[], type?: 'success' | 'error'} | null>(null);
 
-  // Update Status Modal State
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [updateChanges, setUpdateChanges] = useState<string[]>([]);
-  const [updateError, setUpdateError] = useState<string | null>(null);
-  
-  // Pending Update State (Waiting for user confirmation)
-  const [pendingTariffs, setPendingTariffs] = useState<Tariff[] | null>(null);
 
   // Apply Dark Mode
   useEffect(() => {
@@ -72,7 +61,6 @@ const App: React.FC = () => {
     // Updated keys to match brand "portoiq_"
     const savedTariffs = localStorage.getItem('portoiq_tariffs');
     const savedDate = localStorage.getItem('portoiq_last_updated');
-    const savedLog = localStorage.getItem('portoiq_change_log');
     const savedVersion = localStorage.getItem('portoiq_data_version');
 
     // VERSION CHECK LOGIC
@@ -111,14 +99,6 @@ const App: React.FC = () => {
             }
         }
         
-        if (savedLog) {
-            try {
-                setChangeLog(JSON.parse(savedLog));
-            } catch (e) {
-                console.error("Failed to load change log", e);
-            }
-        }
-
         setLastUpdated(savedDate || DEFAULT_LAST_UPDATED);
     }
   }, []);
@@ -192,76 +172,6 @@ const App: React.FC = () => {
         maxCombined: carrier !== 'DHL' && carrier !== 'DEUTSCHEPOST' ? 0 : undefined
     };
     setTariffs(prev => [...prev, newTariff]);
-  };
-
-  // --- AI UPDATE HANDLER ---
-
-  const handleStartUpdate = async () => {
-    // Check key
-    const hasKey = localStorage.getItem('gemini_api_key') || process.env.API_KEY;
-    if (!hasKey) {
-        setShowSettings(true);
-        setNotification({
-            message: "Bitte zuerst einen API Key in den Einstellungen hinterlegen.",
-            type: 'error'
-        });
-        return;
-    }
-
-    // Reset and open update modal
-    setUpdateError(null);
-    setUpdateChanges([]);
-    setPendingTariffs(null);
-    setIsUpdating(true);
-    setShowUpdateModal(true);
-
-    // Call Service
-    const result = await fetchLatestTariffPrices(tariffs);
-    
-    setIsUpdating(false);
-
-    if (result) {
-      const { tariffs: newTariffs, changes } = result;
-      
-      if (changes.length === 0) {
-         setUpdateChanges([]); // Modal will show "No changes found"
-      } else {
-         setUpdateChanges(changes);
-         setPendingTariffs(newTariffs); // Store for confirmation
-      }
-      
-    } else {
-      setUpdateError("Verbindung fehlgeschlagen oder keine Antwort von Gemini erhalten. Bitte Key prüfen.");
-    }
-  };
-
-  const handleConfirmUpdate = () => {
-    if (pendingTariffs && pendingTariffs.length > 0) {
-        setTariffs(pendingTariffs);
-        
-        const now = new Date().toLocaleDateString('de-DE') + ' ' + new Date().toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
-        setLastUpdated(now);
-        localStorage.setItem('portoiq_last_updated', now);
-
-        // Add to log
-        if (updateChanges.length > 0) {
-            const newEntry: ChangeLogEntry = { date: now, changes: updateChanges };
-            const newLog = [newEntry, ...changeLog].slice(0, 50);
-            setChangeLog(newLog);
-            localStorage.setItem('portoiq_change_log', JSON.stringify(newLog));
-        }
-
-        setNotification({ message: 'Preise erfolgreich aktualisiert', type: 'success' });
-    }
-    setShowUpdateModal(false);
-    setPendingTariffs(null);
-  };
-
-  const handleDiscardUpdate = () => {
-    setShowUpdateModal(false);
-    setPendingTariffs(null);
-    setUpdateChanges([]);
-    setNotification({ message: 'Update verworfen', type: 'error' });
   };
 
   const handleReset = () => {
@@ -441,9 +351,6 @@ const App: React.FC = () => {
         onClose={() => setShowTariffOverview(false)} 
         tariffs={tariffs} 
         lastUpdated={lastUpdated}
-        onUpdate={handleStartUpdate}
-        onChangeLogRequest={() => {}} // Internal handling moved
-        changeLog={changeLog}
         // CRUD Props
         onUpdateTariff={handleUpdateTariff}
         onDeleteTariff={handleDeleteTariff}
@@ -452,17 +359,6 @@ const App: React.FC = () => {
         onStartEdit={handleStartEdit}
         onCancelEdit={handleCancelEdit}
         onSaveEdit={handleSaveEdit}
-      />
-
-      {/* Update Status / Confirmation Modal */}
-      <UpdateStatusModal 
-        isOpen={showUpdateModal}
-        isLoading={isUpdating}
-        resultChanges={updateChanges}
-        error={updateError}
-        onClose={() => setShowUpdateModal(false)}
-        onConfirm={handleConfirmUpdate}
-        onDiscard={handleDiscardUpdate}
       />
 
       {/* About Modal */}
@@ -477,7 +373,6 @@ const App: React.FC = () => {
         onClose={() => setShowSettings(false)} 
         currentTariffs={tariffs}
         lastUpdated={lastUpdated}
-        changeLog={changeLog}
       />
     </div>
   );

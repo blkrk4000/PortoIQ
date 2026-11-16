@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Cpu, Database, CloudCog, Bot, Scale, ChevronDown, ChevronUp, User } from 'lucide-react';
+import { X, Cpu, Database, Scale, ChevronDown, ChevronUp, User } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
@@ -45,13 +45,6 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     </div>
                     <span className="text-sm font-semibold text-stone-700 dark:text-slate-200">Personal Tool</span>
                 </div>
-                <span className="text-stone-400 dark:text-slate-600 text-sm">+</span>
-                <div className="flex items-center gap-2">
-                    <div className="bg-stone-300 dark:bg-blue-900/30 p-1.5 rounded-full text-stone-600 dark:text-blue-400">
-                        <Bot size={16} />
-                    </div>
-                    <span className="text-sm font-semibold text-stone-700 dark:text-slate-200">Gemini AI</span>
-                </div>
             </div>
           </div>
 
@@ -80,18 +73,6 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                         <strong className="text-stone-800 dark:text-white block mb-0.5">Algorithmus</strong>
                         <p className="leading-relaxed">
                             Bei Eingabe der Maße prüft ein lokaler Algorithmus Dimensionen und Gewicht gegen die Limits der Anbieter.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="flex gap-3">
-                    <div className="mt-0.5 min-w-8">
-                        <CloudCog className="text-stone-500 dark:text-indigo-400" size={18} />
-                    </div>
-                    <div>
-                        <strong className="text-stone-700 dark:text-indigo-400 block mb-0.5">AI Live-Update (Gemini)</strong>
-                        <p className="leading-relaxed">
-                            Der "Aktualisieren"-Button nutzt das <strong>Google Gemini 2.0 Flash</strong> Modell, um Preise live im Internet zu validieren (Google Search Grounding).
                         </p>
                     </div>
                 </div>

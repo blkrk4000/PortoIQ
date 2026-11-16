@@ -45,13 +45,3 @@ export interface CarrierConfig {
   logoText: string;
   bookingUrl: string;
 }
-
-export interface UpdateResult {
-  tariffs: Tariff[];
-  changes: string[];
-}
-
-export interface ChangeLogEntry {
-  date: string;
-  changes: string[];
-}
