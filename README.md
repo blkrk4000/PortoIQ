@@ -4,6 +4,8 @@
 
 PortoIQ ist ein einfacher Versandrechner für Pakete innerhalb Deutschlands (DHL, Hermes, DPD, GLS).
 
+Erstellt mit Google AI Studio (Gemini), weiterentwickelt mit Claude (Anthropic).
+
 ## Features
 
 *   **Tarifrechner:** Vergleich basierend auf Maßen & Gewicht.

@@ -124,7 +124,7 @@ export const TARIFFS: Tariff[] = [
     currency: '€',
     maxWeight: 2,
     maxDimensions: { length: 35, width: 25, height: 10 },
-    features: ['Keine Haftung', 'Keine Sendungsverfolgung'],
+    features: ['Keine Haftung', 'Sendungsverfolgung nur bei eBay-Versand (Pilot bis Ende 2026)'],
   },
   {
     id: 'dhl-paeckchen-m',
@@ -134,7 +134,7 @@ export const TARIFFS: Tariff[] = [
     currency: '€',
     maxWeight: 2,
     maxDimensions: { length: 60, width: 30, height: 15 },
-    features: ['Keine Haftung', 'Keine Sendungsverfolgung'],
+    features: ['Keine Haftung', 'Sendungsverfolgung nur bei eBay-Versand (Pilot bis Ende 2026)'],
   },
   {
     id: 'dhl-paket-2kg',

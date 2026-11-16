@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Package, Truck, Info, Table2, Sun, Moon, PencilLine } from 'lucide-react';
 import { PackageSpecs, CalculationResult } from './types';
 import { TARIFFS, DEFAULT_LAST_UPDATED } from './constants';
+import { version } from './package.json';
 import { calculateBestRates } from './utils/calculator';
 import { PackageForm } from './components/PackageForm';
 import { ResultCard } from './components/ResultCard';
@@ -83,7 +84,7 @@ const App: React.FC = () => {
                 <h1 className="font-black text-2xl text-stone-900 dark:text-white tracking-tight">
                 Porto<span className="text-indigo-600 dark:text-indigo-400">IQ</span>
                 </h1>
-                <span className="text-[10px] font-bold text-stone-500 dark:text-slate-500 bg-stone-300 dark:bg-slate-800 px-2 py-1 rounded-md hidden sm:inline-block">v1.0.0</span>
+                <span className="text-[10px] font-bold text-stone-500 dark:text-slate-500 bg-stone-300 dark:bg-slate-800 px-2 py-1 rounded-md hidden sm:inline-block">v{version}</span>
             </div>
           </div>
           
