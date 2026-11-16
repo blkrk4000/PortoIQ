@@ -16,6 +16,14 @@ export const calculateBestRates = (specs: PackageSpecs, tariffs: Tariff[]): Calc
 
   // 1. Find ALL valid tariffs first
   const allMatches: CalculationResult[] = tariffs.map((tariff) => {
+    // Unfertige Tarife (z.B. neu angelegt) überspringen: ohne Preis oder ohne Maßlimit
+    // würden sie sonst auf jedes Paket passen.
+    const hasSizeLimit =
+      !!tariff.maxDimensions || (tariff.maxCombined ?? 0) > 0 || (tariff.maxGirth ?? 0) > 0;
+    if (tariff.price <= 0 || !hasSizeLimit) {
+      return { tariff, isMatch: false, reason: 'Tarif unvollständig (Preis oder Maße fehlen)' };
+    }
+
     // Weight Check
     if (weight > tariff.maxWeight) {
       return { tariff, isMatch: false, reason: `Zu schwer (Max ${tariff.maxWeight}kg)` };
