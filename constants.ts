@@ -1,7 +1,7 @@
 import { CarrierConfig, Tariff } from './types';
 
-// Stand der Daten: 02.03.2026 (Hermes Preisanpassung)
-export const DEFAULT_LAST_UPDATED = '02.03.2026';
+// Stand der Daten: 16.11.2026 (alle Anbieter gegen offizielle Seiten geprüft)
+export const DEFAULT_LAST_UPDATED = '16.11.2026';
 
 // Carrier Branding
 export const CARRIERS: Record<string, CarrierConfig> = {
@@ -48,7 +48,7 @@ export const CARRIERS: Record<string, CarrierConfig> = {
 };
 
 /**
- * TARIFF DATABASE (Stand März 2026)
+ * TARIFF DATABASE (Stand 16.11.2026)
  * Base values for domestic DE shipping (Online Preise).
  */
 export const TARIFFS: Tariff[] = [
@@ -249,12 +249,12 @@ export const TARIFFS: Tariff[] = [
     features: ['Haftung bis 500 €', 'Sendungsverfolgung', 'Inkl. Abholung'],
   },
 
-  // --- DPD (Online Preise März 2026, max 20kg) ---
+  // --- DPD (Abgabe im Paketshop, Zustellung an Haustür, max 20kg) ---
   {
     id: 'dpd-xs',
     carrier: 'DPD',
     name: 'Paket XS',
-    price: 4.59, // Updated
+    price: 5.15,
     currency: '€',
     maxWeight: 20, // Updated
     maxCombined: 35, // L + S
@@ -264,7 +264,7 @@ export const TARIFFS: Tariff[] = [
     id: 'dpd-s',
     carrier: 'DPD',
     name: 'Paket S',
-    price: 5.19, // Updated
+    price: 5.45,
     currency: '€',
     maxWeight: 20, // Updated
     maxCombined: 50,
@@ -274,7 +274,7 @@ export const TARIFFS: Tariff[] = [
     id: 'dpd-m',
     carrier: 'DPD',
     name: 'Paket M',
-    price: 6.90, // Updated
+    price: 6.95,
     currency: '€',
     maxWeight: 20, // Updated
     maxCombined: 70,
@@ -284,7 +284,7 @@ export const TARIFFS: Tariff[] = [
     id: 'dpd-l',
     carrier: 'DPD',
     name: 'Paket L',
-    price: 10.90, // Updated
+    price: 10.95,
     currency: '€',
     maxWeight: 20, // Updated
     maxCombined: 90,
@@ -294,15 +294,15 @@ export const TARIFFS: Tariff[] = [
     id: 'dpd-xl',
     carrier: 'DPD',
     name: 'Paket XL',
-    price: 18.40, // Updated
+    price: 18.69,
     currency: '€',
     maxWeight: 20, // Updated
-    maxCombined: 300, 
-    maxGirth: 300, // DPD Max Girth
+    maxDimensions: { length: 100, width: 100, height: 100 }, // längste Seite max. 100 cm
+    maxGirth: 250, // Gurtmaß max. 250 cm (Abgabe im Shop)
     features: ['Haftung bis 520 €', 'Sendungsverfolgung'],
   },
 
-  // --- GLS (Online Preise März 2026) ---
+  // --- GLS (Zustellung an Empfängeradresse, max 40kg) ---
   {
     id: 'gls-xs',
     carrier: 'GLS',
@@ -317,7 +317,7 @@ export const TARIFFS: Tariff[] = [
     id: 'gls-s',
     carrier: 'GLS',
     name: 'Paket S',
-    price: 5.19,
+    price: 5.49,
     currency: '€',
     maxWeight: 40,
     maxCombined: 50,
@@ -330,28 +330,28 @@ export const TARIFFS: Tariff[] = [
     price: 6.89,
     currency: '€',
     maxWeight: 40,
-    maxCombined: 65,
+    maxCombined: 70,
     features: ['Haftung bis 750 €', 'Sendungsverfolgung'],
   },
   {
     id: 'gls-l',
     carrier: 'GLS',
     name: 'Paket L',
-    price: 10.89,
+    price: 10.99,
     currency: '€',
     maxWeight: 40,
-    maxCombined: 80,
+    maxCombined: 90,
     features: ['Haftung bis 750 €', 'Sendungsverfolgung'],
   },
   {
     id: 'gls-xl',
     carrier: 'GLS',
     name: 'Paket XL',
-    price: 22.00,
+    price: 23.99,
     currency: '€',
     maxWeight: 40,
-    maxCombined: 300,
-    maxGirth: 300, 
+    maxDimensions: { length: 200, width: 80, height: 60 }, // max. 200 x 80 x 60 cm
+    maxGirth: 300, // L + 2B + 2H max. 300 cm
     features: ['Haftung bis 750 €', 'Sendungsverfolgung'],
   },
 ];
