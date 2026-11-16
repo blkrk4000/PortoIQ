@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#4f46e5" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262626" />
     <meta name="description" content="PortoIQ - Vergleiche Paketpreise von DHL, Hermes, DPD und GLS in Sekunden." />
     
     <title>PortoIQ Versandvergleich</title>
@@ -20,8 +21,11 @@
         theme: {
           extend: {
             colors: {
+              // Dark Mode: neutrale Grautöne statt Blaugrau, kein reines Schwarz/Weiß (augenschonend)
               slate: {
-                850: '#1e293b', // Custom darker slate for cards
+                50: '#f5f5f5', 100: '#e6e6e6', 200: '#d4d4d4', 300: '#bdbdbd', 400: '#9b9b9b',
+                500: '#7a7a7a', 600: '#5c5c5c', 700: '#444444', 800: '#333333',
+                850: '#2c2c2c', 900: '#262626', 950: '#1c1c1c',
               }
             }
           }
@@ -79,7 +83,7 @@
 }
 </script>
 </head>
-  <body class="bg-stone-300 text-stone-900 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-stone-400 selection:text-white dark:selection:bg-indigo-900 dark:selection:text-indigo-100 transition-colors duration-300">
+  <body class="bg-stone-300 text-stone-900 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-stone-400 selection:text-white dark:selection:bg-slate-600 dark:selection:text-slate-100 transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
   </body>

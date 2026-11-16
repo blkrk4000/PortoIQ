@@ -38,7 +38,7 @@ export const TariffOverview: React.FC<Props> = ({ isOpen, onClose, tariffs, last
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-stone-300 dark:border-slate-800 bg-stone-200 dark:bg-slate-900 sticky top-0 z-20 gap-4">
           <div>
-            <h2 className="text-xl font-bold text-stone-900 dark:text-white">Portopreise</h2>
+            <h2 className="text-xl font-bold text-stone-900 dark:text-slate-100">Portopreise</h2>
             <div className="flex items-center gap-2 mt-1">
                 <CalendarClock size={14} className="text-stone-500 dark:text-slate-400"/>
                 <p className="text-sm font-medium text-stone-600 dark:text-slate-400">
@@ -80,7 +80,7 @@ export const TariffOverview: React.FC<Props> = ({ isOpen, onClose, tariffs, last
                       <div key={tariff.id} className="p-4 hover:bg-stone-300 dark:hover:bg-slate-800 transition-colors">
                         <div className="flex justify-between items-start mb-2">
                           <span className="font-semibold text-stone-800 dark:text-slate-200 text-sm leading-tight pr-2">{tariff.name}</span>
-                          <span className="font-bold text-stone-900 dark:text-white bg-stone-300 dark:bg-slate-800 px-2 py-0.5 rounded text-sm whitespace-nowrap">
+                          <span className="font-bold text-stone-900 dark:text-slate-100 bg-stone-300 dark:bg-slate-800 px-2 py-0.5 rounded text-sm whitespace-nowrap">
                               {tariff.price.toFixed(2)} €
                           </span>
                         </div>

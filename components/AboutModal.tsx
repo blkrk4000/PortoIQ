@@ -24,7 +24,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
       <div className="relative bg-stone-200 dark:bg-slate-900 w-full max-w-lg rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 flex flex-col max-h-[90vh] transition-colors duration-300">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-stone-300 dark:border-slate-800 bg-stone-200/50 dark:bg-slate-850/50 flex-shrink-0">
-          <h2 className="text-lg font-bold text-stone-800 dark:text-white">Über PortoIQ</h2>
+          <h2 className="text-lg font-bold text-stone-800 dark:text-slate-100">Über PortoIQ</h2>
           <button 
             onClick={onClose}
             className="p-1.5 hover:bg-stone-300 dark:hover:bg-slate-700 rounded-full transition-colors text-stone-500 dark:text-slate-400"
@@ -41,7 +41,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
             <h3 className="text-xs font-bold text-stone-500 dark:text-slate-500 uppercase tracking-widest">Projekt</h3>
             <div className="flex items-center gap-4 bg-stone-100 dark:bg-slate-800 p-3 rounded-lg border border-stone-300 dark:border-slate-700">
                 <div className="flex items-center gap-2">
-                    <div className="bg-stone-300 dark:bg-indigo-900/30 p-1.5 rounded-full text-stone-600 dark:text-indigo-400">
+                    <div className="bg-stone-300 dark:bg-slate-700 p-1.5 rounded-full text-stone-600 dark:text-slate-300">
                         <User size={16} />
                     </div>
                     <span className="text-sm font-semibold text-stone-700 dark:text-slate-200">Personal Tool</span>
@@ -59,7 +59,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                         <Database className="text-stone-400 dark:text-slate-500" size={18} />
                     </div>
                     <div>
-                        <strong className="text-stone-800 dark:text-white block mb-0.5">Lokale Tarif-Datenbank</strong>
+                        <strong className="text-stone-800 dark:text-slate-100 block mb-0.5">Lokale Tarif-Datenbank</strong>
                         <p className="leading-relaxed">
                             Die Tarife stehen fest in der App und werden bei Preisänderungen per Update neu veröffentlicht.
                         </p>
@@ -71,7 +71,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                         <Cpu className="text-stone-400 dark:text-slate-500" size={18} />
                     </div>
                     <div>
-                        <strong className="text-stone-800 dark:text-white block mb-0.5">Algorithmus</strong>
+                        <strong className="text-stone-800 dark:text-slate-100 block mb-0.5">Algorithmus</strong>
                         <p className="leading-relaxed">
                             Bei Eingabe der Maße prüft ein lokaler Algorithmus Dimensionen und Gewicht gegen die Limits der Anbieter.
                         </p>
@@ -91,7 +91,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <p className="font-bold font-mono">MIT License</p>
                     <button 
                         onClick={() => setShowLicense(!showLicense)}
-                        className="flex items-center gap-1 text-stone-600 dark:text-indigo-400 hover:text-stone-800 dark:hover:text-indigo-300 font-semibold transition-colors"
+                        className="flex items-center gap-1 text-stone-600 dark:text-slate-300 hover:text-stone-800 dark:hover:text-slate-100 font-semibold transition-colors"
                     >
                         {showLicense ? (
                             <>Weniger anzeigen <ChevronUp size={12}/></>

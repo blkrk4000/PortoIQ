@@ -77,12 +77,12 @@ const App: React.FC = () => {
           
           {/* Brand & Version */}
           <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="bg-indigo-600 dark:bg-indigo-600 text-white p-2 rounded-lg shadow-sm shadow-indigo-200 dark:shadow-none">
+            <div className="bg-indigo-600 dark:bg-slate-600 text-white p-2 rounded-lg shadow-sm shadow-indigo-200 dark:shadow-none">
               <Truck size={20} className="transform -scale-x-100" />
             </div>
             <div className="flex items-center gap-3">
-                <h1 className="font-black text-2xl text-stone-900 dark:text-white tracking-tight">
-                Porto<span className="text-indigo-600 dark:text-indigo-400">IQ</span>
+                <h1 className="font-black text-2xl text-stone-900 dark:text-slate-100 tracking-tight">
+                Porto<span className="text-indigo-600 dark:text-slate-300">IQ</span>
                 </h1>
                 <span className="text-[10px] font-bold text-stone-500 dark:text-slate-500 bg-stone-300 dark:bg-slate-800 px-2 py-1 rounded-md hidden sm:inline-block">v{version}</span>
             </div>
@@ -141,7 +141,7 @@ const App: React.FC = () => {
             <>
               <div className="flex items-center justify-between px-1 mb-2">
                 <h3 className="font-bold text-stone-700 dark:text-slate-200 text-lg flex items-center gap-2">
-                  <Truck className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  <Truck className="w-5 h-5 text-indigo-600 dark:text-slate-300" />
                   {results.length} Tarife gefunden
                 </h3>
               </div>
@@ -167,7 +167,7 @@ const App: React.FC = () => {
               ) : hasAnyInput ? (
                 // STATE 2: Partial Input (The "Zwischenschritt")
                 <div className="max-w-md mx-auto px-6 animate-in fade-in duration-300">
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-stone-400 dark:bg-indigo-900/20 mb-4 text-white dark:text-indigo-400">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-stone-400 dark:bg-slate-700 mb-4 text-white dark:text-slate-300">
                     <PencilLine size={28} />
                   </div>
                   <p className="text-stone-600 dark:text-slate-400 font-medium text-lg">Bitte Maße & Gewicht vervollständigen...</p>

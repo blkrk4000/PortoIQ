@@ -59,7 +59,7 @@ const StandardInput = ({
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-xs font-bold text-stone-500 dark:text-slate-400 uppercase tracking-wide flex items-center gap-1.5">
-        <Icon size={14} className="text-stone-400 dark:text-indigo-500/70" /> {label}
+        <Icon size={14} className="text-stone-400 dark:text-slate-500" /> {label}
       </label>
       <div className="relative group">
         <input
@@ -75,7 +75,7 @@ const StandardInput = ({
                 }
             }}
             // Added pr-14 to make room for suffix AND buttons
-            className="w-full h-11 pl-3 pr-14 rounded-lg bg-stone-100 dark:bg-slate-800 border border-stone-300 dark:border-slate-700 focus:border-stone-500 dark:focus:border-indigo-500 focus:ring-4 focus:ring-stone-400/20 dark:focus:ring-indigo-500/10 text-stone-900 dark:text-white font-semibold outline-none transition-all placeholder:text-stone-400 dark:placeholder:text-slate-600 shadow-sm"
+            className="w-full h-11 pl-3 pr-14 rounded-lg bg-stone-100 dark:bg-slate-800 border border-stone-300 dark:border-slate-700 focus:border-stone-500 dark:focus:border-slate-400 focus:ring-4 focus:ring-stone-400/20 dark:focus:ring-slate-400/10 text-stone-900 dark:text-slate-100 font-semibold outline-none transition-all placeholder:text-stone-400 dark:placeholder:text-slate-600 shadow-sm"
         />
         
         {/* Container for Suffix and Buttons */}
@@ -135,8 +135,8 @@ export const PackageForm: React.FC<Props> = ({ values, onChange, onReset }) => {
       
       {/* Header Row */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-bold text-stone-800 dark:text-white flex items-center gap-2.5">
-          <div className="bg-stone-300 dark:bg-indigo-900/30 p-2 rounded-lg text-stone-600 dark:text-indigo-400">
+        <h3 className="text-lg font-bold text-stone-800 dark:text-slate-100 flex items-center gap-2.5">
+          <div className="bg-stone-300 dark:bg-slate-700 p-2 rounded-lg text-stone-600 dark:text-slate-300">
              <PackageOpen className="w-5 h-5" />
           </div>
           Paketdaten erfassen
