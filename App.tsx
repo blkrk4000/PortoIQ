@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Package, Truck, Info, Table2, CheckCircle2, X, Settings, Sun, Moon, PencilLine } from 'lucide-react';
-import { PackageSpecs, CalculationResult, Tariff, CarrierId } from './types';
-import { TARIFFS as DEFAULT_TARIFFS, DEFAULT_LAST_UPDATED, DATA_VERSION } from './constants';
+import { Package, Truck, Info, Table2, Sun, Moon, PencilLine } from 'lucide-react';
+import { PackageSpecs, CalculationResult } from './types';
+import { TARIFFS, DEFAULT_LAST_UPDATED } from './constants';
 import { calculateBestRates } from './utils/calculator';
 import { PackageForm } from './components/PackageForm';
 import { ResultCard } from './components/ResultCard';
 import { TariffOverview } from './components/TariffOverview';
 import { AboutModal } from './components/AboutModal';
-import { SettingsModal } from './components/SettingsModal';
 
+// Tarife kommen ausschließlich aus constants.ts (Update per Push auf GitHub)
 const App: React.FC = () => {
   const [specs, setSpecs] = useState<PackageSpecs>({
     length: 0,
@@ -28,18 +28,11 @@ const App: React.FC = () => {
   });
 
   // Data State
-  const [tariffs, setTariffs] = useState<Tariff[]>(DEFAULT_TARIFFS);
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [results, setResults] = useState<CalculationResult[]>([]);
-  
-  // Edit Mode Snapshot State (For "Cancel" functionality)
-  const [tariffSnapshot, setTariffSnapshot] = useState<Tariff[] | null>(null);
 
   // UI Interaction State
   const [showTariffOverview, setShowTariffOverview] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const [notification, setNotification] = useState<{message: string, details?: string[], type?: 'success' | 'error'} | null>(null);
 
 
   // Apply Dark Mode
@@ -56,136 +49,20 @@ const App: React.FC = () => {
 
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
-  // Load saved data on mount
-  useEffect(() => {
-    // Updated keys to match brand "portoiq_"
-    const savedTariffs = localStorage.getItem('portoiq_tariffs');
-    const savedDate = localStorage.getItem('portoiq_last_updated');
-    const savedVersion = localStorage.getItem('portoiq_data_version');
-
-    // VERSION CHECK LOGIC
-    let currentVersion = parseInt(savedVersion || '0', 10);
-
-    // Migration: If user has data but no version, assume they are on v1 (current baseline)
-    // This prevents wiping existing data until we actually bump to v2
-    if (!savedVersion && savedTariffs) {
-        currentVersion = 1;
-        localStorage.setItem('portoiq_data_version', '1');
-    }
-
-    // If code version is newer than stored version, force reset to defaults
-    if (currentVersion < DATA_VERSION) {
-        console.log(`App updated: Migrating from v${currentVersion} to v${DATA_VERSION}`);
-        
-        setTariffs(DEFAULT_TARIFFS);
-        setLastUpdated(DEFAULT_LAST_UPDATED);
-        
-        // Persist new defaults immediately
-        localStorage.setItem('portoiq_tariffs', JSON.stringify(DEFAULT_TARIFFS));
-        localStorage.setItem('portoiq_last_updated', DEFAULT_LAST_UPDATED);
-        localStorage.setItem('portoiq_data_version', String(DATA_VERSION));
-
-        // Notify user if it wasn't a fresh install
-        if (currentVersion > 0) {
-            setNotification({ message: 'Preise wurden auf den neuesten Stand aktualisiert.', type: 'success' });
-        }
-    } else {
-        // Normal Load
-        if (savedTariffs) {
-            try {
-                setTariffs(JSON.parse(savedTariffs));
-            } catch (e) {
-                console.error("Failed to load saved tariffs", e);
-            }
-        }
-        
-        setLastUpdated(savedDate || DEFAULT_LAST_UPDATED);
-    }
-  }, []);
-
-  // Save changes to tariffs whenever they change
-  useEffect(() => {
-    // Skip initial empty state if it happens, but safe here as we init with DEFAULT_TARIFFS
-    if (tariffs.length > 0) {
-        localStorage.setItem('portoiq_tariffs', JSON.stringify(tariffs));
-    }
-  }, [tariffs]);
-
   // Recalculate
   useEffect(() => {
     if (specs.length > 0 && specs.width > 0 && specs.height > 0 && specs.weight > 0) {
-      const calculated = calculateBestRates(specs, tariffs);
+      const calculated = calculateBestRates(specs, TARIFFS);
       setResults(calculated);
     } else {
       setResults([]);
     }
-  }, [specs, tariffs]);
-
-  // --- EDITOR SNAPSHOT LOGIC ---
-  const handleStartEdit = () => {
-    setTariffSnapshot(JSON.parse(JSON.stringify(tariffs))); // Deep copy
-  };
-
-  const handleCancelEdit = () => {
-    if (tariffSnapshot) {
-      setTariffs(tariffSnapshot);
-      setNotification({ message: 'Änderungen verworfen', type: 'error' }); // Error color purely for visual distinction
-    }
-    setTariffSnapshot(null);
-  };
-
-  const handleSaveEdit = () => {
-    // Update timestamp on manual save to indicate currentness
-    const now = new Date().toLocaleDateString('de-DE');
-    setLastUpdated(now);
-    localStorage.setItem('portoiq_last_updated', now);
-
-    setTariffSnapshot(null);
-    setNotification({ message: 'Änderungen gespeichert', type: 'success' });
-  };
-
-  // --- TARIFF MANAGEMENT HANDLERS ---
-
-  const handleUpdateTariff = (updatedTariff: Tariff) => {
-    setTariffs(prev => prev.map(t => t.id === updatedTariff.id ? updatedTariff : t));
-    // No notification on every keystroke/save in editor, too noisy
-  };
-
-  const handleDeleteTariff = (id: string) => {
-    if (confirm('Tarif wirklich löschen?')) {
-      setTariffs(prev => prev.filter(t => t.id !== id));
-    }
-  };
-
-  const handleAddTariff = (carrier: CarrierId) => {
-    const newId = `${carrier.toLowerCase()}-custom-${Date.now()}`;
-    const newTariff: Tariff = {
-        id: newId,
-        carrier: carrier,
-        name: 'Neuer Tarif',
-        price: 0,
-        currency: '€',
-        maxWeight: 5,
-        features: [],
-        // Default based on carrier type roughly
-        maxDimensions: carrier === 'DHL' || carrier === 'DEUTSCHEPOST' ? { length: 0, width: 0, height: 0 } : undefined,
-        maxCombined: carrier !== 'DHL' && carrier !== 'DEUTSCHEPOST' ? 0 : undefined
-    };
-    setTariffs(prev => [...prev, newTariff]);
-  };
+  }, [specs]);
 
   const handleReset = () => {
     setSpecs({ length: 0, width: 0, height: 0, weight: 0 });
     setResults([]);
   };
-
-  // Auto-dismiss main notification
-  useEffect(() => {
-    if (notification) {
-        const timer = setTimeout(() => setNotification(null), 3000);
-        return () => clearTimeout(timer);
-    }
-  }, [notification]);
 
   // Determine Input State
   const hasAnyInput = specs.length > 0 || specs.width > 0 || specs.height > 0 || specs.weight > 0;
@@ -235,15 +112,6 @@ const App: React.FC = () => {
                     title={isDarkMode ? "Hellmodus aktivieren" : "Dunkelmodus aktivieren"}
                 >
                     {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
-
-                {/* Settings Button */}
-                <button
-                onClick={() => setShowSettings(true)}
-                className="flex items-center justify-center w-9 h-9 text-stone-500 hover:text-stone-900 dark:text-slate-400 dark:hover:text-indigo-400 hover:bg-stone-300 dark:hover:bg-slate-800 rounded-full transition-colors"
-                title="Einstellungen"
-                >
-                <Settings size={20} />
                 </button>
 
                 {/* Info Button */}
@@ -321,44 +189,16 @@ const App: React.FC = () => {
       {/* Footer Info */}
       <footer className="max-w-4xl mx-auto px-6 pb-6 text-center">
         <p className="text-xs font-medium text-stone-400 dark:text-slate-600">
-            Preisstand: {lastUpdated}
+            Preisstand: {DEFAULT_LAST_UPDATED}
         </p>
       </footer>
       
-      {/* Main Toast Notification */}
-      {notification && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xl px-4 z-[200] animate-in fade-in slide-in-from-bottom-4 duration-300">
-              <div className={`
-                p-4 rounded-xl shadow-2xl border flex flex-col gap-2
-                ${notification.type === 'error' ? 'bg-stone-800 border-stone-600 text-white' : 'bg-stone-800 border-stone-600 text-white dark:bg-slate-800 dark:border-slate-600'}
-              `}>
-                  <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                          <CheckCircle2 className={`${notification.type === 'error' ? 'text-stone-400' : 'text-stone-300'} h-5 w-5`} />
-                          <p className="font-semibold text-base">{notification.message}</p>
-                      </div>
-                      <button onClick={() => setNotification(null)} className="text-stone-400 hover:text-white transition-colors">
-                          <X size={20} />
-                      </button>
-                  </div>
-              </div>
-          </div>
-      )}
-
       {/* Overview Modal */}
       <TariffOverview 
         isOpen={showTariffOverview} 
         onClose={() => setShowTariffOverview(false)} 
-        tariffs={tariffs} 
-        lastUpdated={lastUpdated}
-        // CRUD Props
-        onUpdateTariff={handleUpdateTariff}
-        onDeleteTariff={handleDeleteTariff}
-        onAddTariff={handleAddTariff}
-        // Snapshot/Editor Logic
-        onStartEdit={handleStartEdit}
-        onCancelEdit={handleCancelEdit}
-        onSaveEdit={handleSaveEdit}
+        tariffs={TARIFFS} 
+        lastUpdated={DEFAULT_LAST_UPDATED}
       />
 
       {/* About Modal */}
@@ -367,13 +207,6 @@ const App: React.FC = () => {
         onClose={() => setShowAbout(false)} 
       />
 
-      {/* Settings Modal */}
-      <SettingsModal 
-        isOpen={showSettings} 
-        onClose={() => setShowSettings(false)} 
-        currentTariffs={tariffs}
-        lastUpdated={lastUpdated}
-      />
     </div>
   );
 };

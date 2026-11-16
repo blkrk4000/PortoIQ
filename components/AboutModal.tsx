@@ -60,7 +60,7 @@ export const AboutModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     <div>
                         <strong className="text-stone-800 dark:text-white block mb-0.5">Lokale Tarif-Datenbank</strong>
                         <p className="leading-relaxed">
-                            Die App speichert eine Basis-Datenbank der gängigen Tarife direkt im Browser (Local Storage).
+                            Die Tarife stehen fest in der App und werden bei Preisänderungen per Update neu veröffentlicht.
                         </p>
                     </div>
                 </div>

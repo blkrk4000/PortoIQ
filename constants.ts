@@ -2,7 +2,6 @@ import { CarrierConfig, Tariff } from './types';
 
 // Stand der Daten: 02.03.2026 (Hermes Preisanpassung)
 export const DEFAULT_LAST_UPDATED = '02.03.2026';
-export const DATA_VERSION = 2; // Increment this to force-reset user data to new defaults
 
 // Carrier Branding
 export const CARRIERS: Record<string, CarrierConfig> = {
